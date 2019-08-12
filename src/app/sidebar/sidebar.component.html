@@ -6,12 +6,36 @@
 </div>
 
 <div id="accordion-container">
-	...ACCORDION...
-<div>What's an upslope snow storm?</div>
-<div>What's a high pressure system?</div>
-<div>What's a low pressure system?</div>
-
+  <mat-accordion>
+	<mat-expansion-panel>
+	  <mat-expansion-panel-header>
+		<mat-panel-title>
+			<strong>What's an upslope snow storm?</strong>
+		</mat-panel-title>
+	  </mat-expansion-panel-header>
+	  <p>Upslope snow storms develop when air flows upslope toward the mountains. As cold moist air rises, it cools and condenses, and snow forms. Areas with very moist upslope flow are prone to very heavy snowfall.</p>
+	</mat-expansion-panel>
+	<mat-expansion-panel (opened)="panelOpenState = true"
+						 (closed)="panelOpenState = false">
+	  <mat-expansion-panel-header>
+		<mat-panel-title>
+			<strong>What's a high pressure system?</strong>
+		</mat-panel-title>
+	  </mat-expansion-panel-header>
+	  <p>This is a center of high pressure at Earth's surface, surrounded on all sides by lower pressure. High pressure systems often prevent cloudy skies and precipitation. Air sinks and moves clockwise around the center in the northern hemisphere, and counterclockwise in the southern hemisphere.</p>
+	</mat-expansion-panel>
+	<mat-expansion-panel (opened)="panelOpenState = true"
+						 (closed)="panelOpenState = false">
+		<mat-expansion-panel-header>
+		<mat-panel-title>
+			<strong>What's a low pressure system?</strong>
+		</mat-panel-title>
+		</mat-expansion-panel-header>
+		<p>This is a center of low pressure at Earth's surface surrounded on all sides by higher pressure.  Storm systems are associated with low pressure systems that often produce cloudy skies and precipitation. Air rises in the vicinity of low pressure systems. It moves counterclockwise around the center in the northern hemisphere and clockwise in the southern hemisphere.</p>		 
+	</mat-expansion-panel>
+  </mat-accordion>
 </div>
 
+<br><br>
 
-<input type="button" value="Reset" />
+<button class="se-button" mat-raised-button>Reset</button>
