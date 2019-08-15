@@ -1,22 +1,59 @@
 <div id="map-stage-wrap">
-<img src="assets/map-01.jpg" alt="base US map" class="img-responsive" height="100%">
-    <div class="content-info">
+<div class="map-bkg-container">
+    <img id="map-01" src="assets/map-01.jpg" class="map-bkg active" alt="base US map">
+    <img id="map-02" src="assets/map-02.jpg" class="map-bkg" alt="base US map with divider lines">
+    
+    <img id="map-overlay-01" src="assets/map-overlay-01.png" class="map-bkg active" alt="northern region cold temperature selection">
+    <img id="map-overlay-02" src="assets/map-overlay-02.png" class="map-bkg" alt="northern region warm temperature selection">
+    <img id="map-overlay-03" src="assets/map-overlay-03.png" class="map-bkg" alt="southern region cold temperature selection">
+    <img id="map-overlay-04" src="assets/map-overlay-04.png" class="map-bkg active" alt="southern region warm temperature selection">
+
+</div>
+<div class="overlays-container">
+
+
+    <div id="content-info" class="basebox">
         Drag each system to the correct circle to create a storm, then press Go.
         <br><br>
 
         High Pressure System:
         <br><br>
         <br>
-        <div class="hp-hold">
+        <div id="hp-hold">
             <img src="assets/high_pressure.png" alt="high pressure icon">
         </div>
 
         Low Pressure System:
         <br><br>
         <br>
-        <div class="lp-hold">
+        <div id="lp-hold">
             <img src="assets/low_pressure.png" alt="high pressure icon">
         </div>
     </div>
+
     <button id="go-button" class="se-button" mat-raised-button (click)="openSnackBar(0)">Go</button>
+
+
+    <div id="northern-temp-prompt" class="basebox ts-box">
+        Chose an air temperature in the north:
+        <div class="temp-button-wrap">
+                <button id="north-cold-button" class="ts-button" mat-raised-button>Colder</button>
+                <button id="north-warm-button" class="ts-button" mat-raised-button>Warmer</button>
+            <p>(than freezing)</p> 
+        </div>
+        
+    </div>
+
+    <div id="southern-temp-prompt" class="basebox ts-box">
+        Chose an air temperature in the south:
+        <div class="temp-button-wrap">
+                <button id="south-cold-button" class="ts-button" mat-raised-button>Colder</button>
+                <button id="south-warm-button" class="ts-button" mat-raised-button>Warmer</button>
+            <p>(than freezing)</p>
+        </div>
+        
+    </div>
+</div>       
+        <div id="landing-pad-north"></div>
+        <div id="landing-pad-south"></div>
 </div>
