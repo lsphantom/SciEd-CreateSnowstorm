@@ -6,8 +6,17 @@
 
         High Pressure System:
         <br><br>
+        <br>
+        <div class="hp-hold">
+            <img src="assets/high_pressure.png" alt="high pressure icon">
+        </div>
 
         Low Pressure System:
+        <br><br>
+        <br>
+        <div class="lp-hold">
+            <img src="assets/low_pressure.png" alt="high pressure icon">
+        </div>
     </div>
-    <button id="go-button" class="se-button" mat-raised-button>Go</button>
+    <button id="go-button" class="se-button" mat-raised-button (click)="openSnackBar(0)">Go</button>
 </div>

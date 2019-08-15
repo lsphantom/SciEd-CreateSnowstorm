@@ -15,8 +15,13 @@
 .snow-bkg {
 	background-color: #c5daf4;
 	background-image: url(assets/background.jpg);
-	background-size: cover;
+	background-size: cover; /*1920px 990px;*/
+	background-position: top center;
 	background-repeat: no-repeat;
+	float: none;
+	margin: 0px auto;
+	max-width: 1920px;
+	max-height: 990px;
 }
 
 //Sidebar components
@@ -68,4 +73,20 @@
 	position: absolute;
 	bottom: 40px;
 	left: 340px;
+}
+
+.hp-hold,
+.lp-hold {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+}
+
+.hp-hold {
+	top: 140px;
+	right: 20px;
+}
+.lp-hold {
+	top: 240px;
+	right: 20px;
 }
