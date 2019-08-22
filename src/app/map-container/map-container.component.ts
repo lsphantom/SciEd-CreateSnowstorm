@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -13,12 +14,13 @@ import {MatSnackBar} from '@angular/material';
 
 export class MapContainerComponent implements OnInit {
 
-  
+  inactiveList = ['high', 'low'];
+  activeList = [];
 
   constructor(private snackBar: MatSnackBar) { }
 
-  openSnackBar(messageId){
-
+  openSnackBar(messageId)
+  {
     //Set default messages
     let noDataMessage = "You must place the L and H to proceed.";
     let reverseDataMessage = "Not quite. Reverse the pieces and press Go";
@@ -39,6 +41,16 @@ export class MapContainerComponent implements OnInit {
     let messageArray = [noDataMessage, reverseDataMessage, selectTempMessage, ccnMessage, ccsMessage, wwnMessage, wwsMessage, wcnMessage, wcsMessage, cwnMessage, cwsMessage ];
 
     this.snackBar.open(messageArray[messageId]);
+  }
+
+  drop(event: CdkDragDrop<string[]>)
+  {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    }
+    else {
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    }
   }
 
   ngOnInit() {

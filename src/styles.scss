@@ -41,6 +41,9 @@
 	margin-top: 40px;
 	margin-bottom: 40px;
 }
+.spaced-text {
+	margin-bottom: 60px;
+}
 
 .se-button {
 	font-size: 30px;
@@ -97,39 +100,40 @@
 }
 
 
-#hp-hold,
-#lp-hold {
+#drag-item-high,
+#drag-item-low {
 	width: 100px;
 	height: 100px;
-	position: absolute;
+	/*position: absolute;*/
+	z-index: 9999;
 }
 
-#hp-hold {
+/*#drag-item-high {
 	top: 140px;
 	right: 20px;
 }
-#lp-hold {
+#drag-item-low {
 	top: 240px;
 	right: 20px;
-}
+}*/
 
 #landing-pad-north,
 #landing-pad-south {
-	position: absolute;
+	/*position: absolute;*/
 	width: 100px;
 	height: 100px;
 	border: 2px dashed white;
 	border-radius: 50%;
 }
 
-#landing-pad-north {
+/*#landing-pad-north {
 	left: 736px;
 	top: 320px;
 }
 #landing-pad-south {
 	left: 736px;
 	top: 490px;
-}
+}*/
 
 .ts-box {
 	width: 340px;
@@ -164,4 +168,29 @@
 #north-warm-button,
 #south-warm-button {
 	background-color: #e02e2e;
+}
+
+
+/* DRAG/DROP */
+.drag-boundary {
+	border: 2px solid green;
+}
+#launch-list {
+	width: 100px;
+	height: 230px;
+	position: absolute;
+	left: 320px;
+	bottom: 120px;
+}
+#landing-list {
+	border: 1px dotted blue;
+	width: 100px;
+	height: 300px;
+	position: absolute;
+	left: 736px;
+	top: 320px;
+}
+
+.hidden {
+	display: none;
 }

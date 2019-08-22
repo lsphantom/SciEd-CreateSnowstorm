@@ -1,40 +1,51 @@
-<div id="map-stage-wrap">
+<div id="map-stage-wrap" class="drag-boundary">
 <div class="map-bkg-container">
     <img id="map-01" src="assets/map-01.jpg" class="map-bkg active" alt="base US map">
     <img id="map-02" src="assets/map-02.jpg" class="map-bkg" alt="base US map with divider lines">
     
-    <img id="map-overlay-01" src="assets/map-overlay-01.png" class="map-bkg active" alt="northern region cold temperature selection">
+    <img id="map-overlay-01" src="assets/map-overlay-01.png" class="map-bkg" alt="northern region cold temperature selection">
     <img id="map-overlay-02" src="assets/map-overlay-02.png" class="map-bkg" alt="northern region warm temperature selection">
-    <img id="map-overlay-03" src="assets/map-overlay-03.png" class="map-bkg" alt="southern region cold temperature selection">
-    <img id="map-overlay-04" src="assets/map-overlay-04.png" class="map-bkg active" alt="southern region warm temperature selection">
+    <img id="map-overlay-03" src="assets/map-overlay-03.png" class="map-bkg active" alt="southern region cold temperature selection">
+    <img id="map-overlay-04" src="assets/map-overlay-04.png" class="map-bkg" alt="southern region warm temperature selection">
 
 </div>
 <div class="overlays-container">
-
-
+    <!-- LAUNCH PAD -->
     <div id="content-info" class="basebox">
-        Drag each system to the correct circle to create a storm, then press Go.
-        <br><br>
-
-        High Pressure System:
-        <br><br>
-        <br>
-        <div id="hp-hold">
-            <img src="assets/high_pressure.png" alt="high pressure icon">
-        </div>
-
-        Low Pressure System:
-        <br><br>
-        <br>
-        <div id="lp-hold">
-            <img src="assets/low_pressure.png" alt="high pressure icon">
+        <!-- Info text -->
+        <p class="spaced-text">Drag each system to the correct circle to create a storm, then press Go.</p>
+        <p class="spaced-text">High Pressure System:</p>
+        <p class="spaced-text">Low Pressure System:</p>
+    </div>
+    
+    <!-- Draggable items -->
+    <div id="launch-list" 
+        cdkDropList
+        #launchList="cdkDropList"
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListData]="inactiveList"
+        [cdkDropListConnectedTo]="[landingList]">
+        <div id="drag-item-{{item}}" *ngFor="let item of inactiveList" cdkDrag cdkDragBoundary=".drag-boundary">
+            <img src="assets/{{item}}_pressure.png" alt="{{item}} pressure icon">
         </div>
     </div>
+
+    <!-- LANDING PADS -->
+    <div id="landing-list"
+            cdkDropList
+            #landingList="cdkDropList"
+            (cdkDropListDropped)="drop($event)"
+            [cdkDropListData]="activeList"
+            [cdkDropListConnectedTo]="[launchList]">
+        <!--<div id="landing-pad-north"></div>
+        <div id="landing-pad-south"></div>-->
+    </div>
+    
 
     <button id="go-button" class="se-button" mat-raised-button (click)="openSnackBar(0)">Go</button>
 
 
-    <div id="northern-temp-prompt" class="basebox ts-box">
+    <div id="northern-temp-prompt" class="basebox ts-box hidden">
         Chose an air temperature in the north:
         <div class="temp-button-wrap">
                 <button id="north-cold-button" class="ts-button" mat-raised-button>Colder</button>
@@ -44,7 +55,7 @@
         
     </div>
 
-    <div id="southern-temp-prompt" class="basebox ts-box">
+    <div id="southern-temp-prompt" class="basebox ts-box hidden">
         Chose an air temperature in the south:
         <div class="temp-button-wrap">
                 <button id="south-cold-button" class="ts-button" mat-raised-button>Colder</button>
@@ -53,7 +64,7 @@
         </div>
         
     </div>
+    
 </div>       
-        <div id="landing-pad-north"></div>
-        <div id="landing-pad-south"></div>
+        
 </div>
