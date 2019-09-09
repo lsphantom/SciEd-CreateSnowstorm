@@ -1,48 +1,82 @@
 <div id="map-stage-wrap" class="drag-boundary">
 <div class="map-bkg-container">
-    <img id="map-01" src="assets/map-01.jpg" class="map-bkg active" alt="base US map">
-    <img id="map-02" src="assets/map-02.jpg" class="map-bkg" alt="base US map with divider lines">
+    <img id="map-01" src="assets/map-01.jpg" class="map-bkg {{mb1}}" alt="base US map">
+    <img id="map-02" src="assets/map-02.jpg" class="map-bkg {{mb2}}" alt="base US map with divider lines">
     
     <img id="map-overlay-01" src="assets/map-overlay-01.png" class="map-bkg" alt="northern region cold temperature selection">
     <img id="map-overlay-02" src="assets/map-overlay-02.png" class="map-bkg" alt="northern region warm temperature selection">
-    <img id="map-overlay-03" src="assets/map-overlay-03.png" class="map-bkg active" alt="southern region cold temperature selection">
+    <img id="map-overlay-03" src="assets/map-overlay-03.png" class="map-bkg" alt="southern region cold temperature selection">
     <img id="map-overlay-04" src="assets/map-overlay-04.png" class="map-bkg" alt="southern region warm temperature selection">
 
 </div>
 <div class="overlays-container">
+    <!-- PROCEED DYNAMIC BOX-->
+    <div id="proceed-box" class="basebox paperboxed {{proceedVisibility}}">
+        <p>Press next to proceed.  <button id="next-button" mat-raised-button (click)="proceedToTemps()">Next &rarr;</button></p>
+    </div>
+
     <!-- LAUNCH PAD -->
     <div id="content-info" class="basebox">
         <!-- Info text -->
         <p class="spaced-text">Drag each system to the correct circle to create a storm, then press Go.</p>
-        <p class="spaced-text">High Pressure System:</p>
-        <p class="spaced-text">Low Pressure System:</p>
+        <p class="spaced-text">{{hps}}</p>
+        <p class="spaced-text">{{lps}}</p>
     </div>
     
-    <!-- Draggable items -->
-    <div id="launch-list" 
-        cdkDropList
-        #launchList="cdkDropList"
-        (cdkDropListDropped)="drop($event)"
-        [cdkDropListData]="inactiveList"
-        [cdkDropListConnectedTo]="[landingList]">
-        <div id="drag-item-{{item}}" *ngFor="let item of inactiveList" cdkDrag cdkDragBoundary=".drag-boundary">
-            <img src="assets/{{item}}_pressure.png" alt="{{item}} pressure icon">
+    
+
+    <!-- LANDING PADS-->
+    <div id="landing-pads">
+        <div id="landing-pad-north"></div>
+        <div id="landing-pad-south"></div>
+    </div>
+    
+    <!-- Draggable items-->
+    <div cdkDropListGroup>
+        <div id="launch-list">      
+          <div
+            cdkDropList
+            [cdkDropListData]="inactiveList"
+            class="dropped-list"
+            (cdkDropListDropped)="drop($event)"
+            [cdkDropListEnterPredicate]="noReturnPredicate">
+            <div id="drag-item-{{item}}" *ngFor="let item of inactiveList" cdkDrag cdkDragBoundary=".drag-boundary">
+                <img src="assets/{{item}}_pressure.png" alt="{{item}} pressure icon">
+            </div>
+          </div>
+        </div>
+      
+        <div id="landing-list">
+          <div
+            cdkDropList
+            #northDropList="cdkDropList"
+            [cdkDropListData]="northDrop"
+            [cdkDropListConnectedTo]="[southDropList]"
+            class="dropped-list onmap north-drop"
+            (cdkDropListDropped)="drop($event)">
+            <div id="drag-item-{{item}}" *ngFor="let item of northDrop" cdkDrag cdkDragBoundary=".drag-boundary">
+                <img src="assets/{{item}}_pressure.png" alt="{{item}} pressure icon">
+            </div>
+          </div>
+
+          <div
+            cdkDropList
+            #southDropList="cdkDropList"
+            [cdkDropListData]="southDrop"
+            [cdkDropListConnectedTo]="[northDropList]"
+            class="dropped-list onmap south-drop"
+            (cdkDropListDropped)="drop($event)">
+            <div id="drag-item-{{item}}" *ngFor="let item of southDrop" cdkDrag cdkDragBoundary=".drag-boundary">
+                <img src="assets/{{item}}_pressure.png" alt="{{item}} pressure icon">
+            </div>
+          </div>
+          
         </div>
     </div>
-
-    <!-- LANDING PADS -->
-    <div id="landing-list"
-            cdkDropList
-            #landingList="cdkDropList"
-            (cdkDropListDropped)="drop($event)"
-            [cdkDropListData]="activeList"
-            [cdkDropListConnectedTo]="[launchList]">
-        <!--<div id="landing-pad-north"></div>
-        <div id="landing-pad-south"></div>-->
-    </div>
+      
     
 
-    <button id="go-button" class="se-button" mat-raised-button (click)="openSnackBar(0)">Go</button>
+    <button id="go-button" class="se-button" mat-raised-button (click)="checkPressureSystems()">Go</button>
 
 
     <div id="northern-temp-prompt" class="basebox ts-box hidden">
