@@ -99,10 +99,25 @@
 	font-weight: bold;
 }
 
+#choose-arrow-info {
+	position: absolute;
+	left: 820px;
+	top: 410px;
+	width: 290px;
+	height: 90px;
+}
+
 #go-button {
 	position: absolute;
 	bottom: 40px;
 	left: 330px;
+	font-size: 40px;
+}
+
+#go-button-two {
+	position: absolute;
+	left: 1010px;
+	top: 510px;
 	font-size: 40px;
 }
 
@@ -115,15 +130,6 @@
 	z-index: 9999;
 }
 
-/*#drag-item-high {
-	top: 140px;
-	right: 20px;
-}
-#drag-item-low {
-	top: 240px;
-	right: 20px;
-}*/
-
 #landing-pad-north,
 #landing-pad-south {
 	/*position: absolute;*/
@@ -133,14 +139,9 @@
 	border-radius: 50%;
 }
 
-/*#landing-pad-north {
-	left: 736px;
-	top: 320px;
+#landing-pads.active div {
+	border: 2px solid transparent;
 }
-#landing-pad-south {
-	left: 736px;
-	top: 490px;
-}*/
 
 .ts-box {
 	width: 340px;
@@ -179,9 +180,6 @@
 
 
 /* DRAG/DROP */
-.drag-boundary {
-	border: 2px dashed black;
-}
 #launch-list {
 	width: 100px;
 	height: 230px;
@@ -221,6 +219,51 @@
 	background-color: #fff;
 }
 
+#north-moist-button {
+	background-image: url('./assets/arrow-top-d.png');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	width: 260px;
+	height: 320px;
+	position: absolute;
+	top: 155px;
+	left: 635px;
+	box-shadow: none !important;
+	border: none;
+	opacity: 0.85;
+}
+#north-moist-button:hover,
+#north-moist-button:active {
+	background-image: url('./assets/arrow-top-s.png');
+	opacity: 0.9;
+}
+#south-moist-button {
+	background-image: url('./assets/arrow-bottom-d.png');
+	background-repeat: no-repeat;
+	background-color: transparent;
+	width: 260px;
+	height: 320px;
+	position: absolute;
+	top: 495px;
+	left: 685px;
+	box-shadow: none !important;
+	border: none;
+	opacity: 0.85;
+}
+#south-moist-button:hover,
+#south-moist-button:active {
+	background-image: url('./assets/arrow-bottom-s.png');
+}
+#north-moist-button.deactivated,
+#south-moist-button.deactivated {
+	opacity: 0.3;
+}
+#north-moist-button.active {
+	background-image: url('./assets/arrow-top-s.png');
+}
+#south-moist-button.active {
+	background-image: url('./assets/arrow-bottom-s.png');
+}
 .hidden {
 	display: none;
 }

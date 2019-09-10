@@ -13,24 +13,51 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList }
 
 
 export class MapContainerComponent implements OnInit {
-  mb1 = 'active';
-  mb2 = '';
+  //Drag and Drop Killswitch
+  draggingDisabled: boolean = false;
 
-
-  hps: string = 'High Pressure System:';
-  lps: string = 'Low Pressure System:';
-
-  proceedVisibility = 'hidden';
-
+  //Drag and Drop Arrays
   inactiveList = [
     'high',
     'low'
   ];
-
   northDrop = [];
   southDrop = [];
 
-  //Set default messages
+  //Map Backgrounds
+  mb1 = 'active';
+  mb2 = ''; //includes and deactivates border on drop zones (dashed circles).
+
+  //Map Overlays
+  mo1 = ''; //north cold
+  mo2 = ''; //north warm
+  mo3 = ''; //south cold
+  mo4 = ''; //south warm
+
+  //Temp Selections
+  selectedTempNorth = '';
+  selectedTempSouth = '';
+
+  //Moisture Selection
+  selectedMoistDirection = '';
+  northArrowState = '';
+  southArrowState = '';
+
+  //Stage 1 Dynamic Content Displays
+  hps: string = 'High Pressure System:';
+  lps: string = 'Low Pressure System:';
+  proceedVisibility = 'hidden';
+  stageOneContent = '';
+
+  //Stage 2 Dynamic Content Displays
+  northTempSelect = 'hidden';
+  southTempSelect = 'hidden';
+  procceedVisibilityTwo = 'hidden';
+
+  //Stage 3 Dynamic Content Displays
+  
+
+  //Snackbar Messages
   noDataMessage = "You must place the L and H to proceed.";
   reverseDataMessage = "Not quite. Reverse the pieces and press Go";
   successDataMessage = "Great! For an upslope snow storm, high pressure is in the north and low pressure is in the south."
@@ -47,38 +74,14 @@ export class MapContainerComponent implements OnInit {
     
   cwnMessage = "You're right about the temperatures but you need more moisture. There isn't enough in the north. Try again.";
   cwsMessage = "Nice job! You chose the right ingredients and made an upslope snow storm.";
-
+  
+  //Snackbar Messages Array (size:11)
   messageArray = [this.noDataMessage, this.reverseDataMessage, this.successDataMessage, this.selectTempMessage, this.ccnMessage, this.ccsMessage, this.wwnMessage, this.wwsMessage, this.wcnMessage, this.wcsMessage, this.cwnMessage, this.cwsMessage ];
 
-
-  
-
-  constructor(private snackBar: MatSnackBar) { }
-
+  //Functions
   openSnackBar(messageId)
   {
-    this.snackBar.open(this.messageArray[messageId]);
-  }
-
-  checkPressureSystems()
-  {
-    if (this.northDrop.length === 0 && this.southDrop.length === 0) {
-      this.openSnackBar(0);
-    }
-    else if (this.northDrop[0] === "low"  && this.southDrop[0] === "high")
-    {
-      this.openSnackBar(1);
-    }
-    else if (this.northDrop[0] === "high"  && this.southDrop[0] === "low")
-    {
-      //Correct PS
-      this.openSnackBar(2);
-      this.proceedVisibility = '';
-    }
-     else
-    {
-      this.openSnackBar(0);
-    }
+    this.snackBar.open(this.messageArray[messageId], null, {duration: 10000});
   }
 
   drop(event: CdkDragDrop<string[]>)
@@ -95,9 +98,75 @@ export class MapContainerComponent implements OnInit {
         transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       }
     }
-    
     this.removePSLabels();
   }
+
+  //Stage 1: Check Pressure Systems
+  checkPressureSystems()
+  {
+    if (this.northDrop.length === 0 && this.southDrop.length === 0) {
+      this.openSnackBar(0);
+    }
+    else if (this.northDrop[0] === "low"  && this.southDrop[0] === "high")
+    {
+      this.openSnackBar(1);
+    }
+    else if (this.northDrop[0] === "high"  && this.southDrop[0] === "low")
+    {
+      //Correct Selections
+      this.openSnackBar(2);
+      this.proceedVisibility = '';
+    }
+     else
+    {
+      this.openSnackBar(0);
+    }
+  }
+
+  //Stage 2: Check Temps and Moisture TODO:Add blank moisture cases
+  checkTempMoisture()
+  {
+    if (this.selectedTempNorth === "cold" && this.selectedTempSouth === 'warm') {
+      if (this.selectedMoistDirection === "south") {
+        //Correct Selections
+        this.openSnackBar(11);
+
+      } else {
+        this.openSnackBar(10);
+      }
+    }
+    else if (this.selectedTempNorth === "warm" && this.selectedTempSouth === 'cold')
+    {
+      if (this.selectedMoistDirection === "south") {
+        this.openSnackBar(9);
+      } else {
+        this.openSnackBar(8);
+      }
+    }
+    else if (this.selectedTempNorth === "warm" && this.selectedTempSouth === 'warm')
+    {
+      if (this.selectedMoistDirection === "south") {
+        this.openSnackBar(7);
+      } else {
+        this.openSnackBar(6);
+      }
+    }
+    else if (this.selectedTempNorth === "cold" && this.selectedTempSouth === 'cold')
+    {
+      if (this.selectedMoistDirection === "south") {
+        this.openSnackBar(5);
+      } else {
+        this.openSnackBar(4);
+      }
+    }
+     else
+    {
+      this.openSnackBar(3);
+    }
+  }
+
+  //Stage 3: Show animations and additional info
+
 
   /** Remove labels for pressure systems if draggables have changed default state */
   removePSLabels() {
@@ -114,11 +183,87 @@ export class MapContainerComponent implements OnInit {
 
   proceedToTemps() {
     this.proceedVisibility = 'hidden';
+    this.stageOneContent = 'hidden';
     this.mb1 = '';
     this.mb2 = 'active';
+    this.disableDragging();
+    this.snackBar.dismiss();
+    this.northTempSelect = '';
   }
 
-  ngOnInit() {
+  disableDragging() {
+    this.draggingDisabled = true;
   }
+  
+  selectNorthTemp(temp) {
+    this.selectedTempNorth = temp;
+    this.setMapOverlays();
+    this.southTempSelect = '';
+  }
+
+  selectSouthTemp(temp) {
+    this.selectedTempSouth = temp;
+    this.setMapOverlays();
+    this.procceedVisibilityTwo = '';
+  }
+
+  selectMoistureDirection(dir) {
+    this.selectedMoistDirection = dir;
+    this.deactivateInverseArrow();
+  }
+
+  deactivateInverseArrow() {
+    if (this.selectedMoistDirection === 'north') {
+      this.southArrowState = 'deactivated';
+      this.northArrowState = 'active';
+    }
+    else {
+      this.northArrowState = 'deactivated';
+      this.southArrowState = 'active';
+    }
+  }
+
+  setMapOverlays() {
+    //one switch statement for north
+    switch (this.selectedTempNorth) {
+      case 'cold':
+        this.mo1 = 'active';
+        this.mo2 = '';
+      break;
+
+      case 'warm':
+        this.mo2 = 'active';
+        this.mo1 = '';
+      break;
+
+      default:
+        this.mo1 = '';
+        this.mo2 = '';
+      break;
+    }
+
+    //one switch statement for south
+    switch (this.selectedTempSouth) {
+      case 'cold':
+        this.mo3 = 'active';
+        this.mo4 = '';
+      break;
+
+      case 'warm':
+        this.mo4 = 'active';
+        this.mo3 = '';
+      break;
+
+      default:
+        this.mo3 = '';
+        this.mo4 = '';
+      break;
+    }
+  }
+
+
+  constructor(private snackBar: MatSnackBar) { }
+
+  ngOnInit() {}
 
 }
