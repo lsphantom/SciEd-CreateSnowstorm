@@ -264,6 +264,23 @@
 #south-moist-button.active {
 	background-image: url('./assets/arrow-bottom-s.png');
 }
+
+#snowstorm-ani {
+	position: absolute;
+	margin-top: 50px;
+	margin-left: 50px;
+}
+
+#end-infobox {
+	position: absolute;
+	left: 50px;
+	bottom: 50px;
+	width: 450px;
+	height: 400px;
+	font-size: 18px;
+	line-height: 1.3em;
+}
+
 .hidden {
 	display: none;
 }

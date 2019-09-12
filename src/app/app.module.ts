@@ -11,6 +11,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DroppableDirective } from './droppable.directive';
 import { DraggableDirective } from './draggable.directive';
 import { DragService } from './drag.service';
+import { VideoComponent } from './video/video.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DragService } from './drag.service';
     MapContainerComponent,
     AccordionComponent,
     DroppableDirective,
-    DraggableDirective
+    DraggableDirective,
+    VideoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 
@@ -55,6 +55,7 @@ export class MapContainerComponent implements OnInit {
   procceedVisibilityTwo = 'hidden';
 
   //Stage 3 Dynamic Content Displays
+  visibilityThree = 'hidden';
   
 
   //Snackbar Messages
@@ -130,33 +131,41 @@ export class MapContainerComponent implements OnInit {
       if (this.selectedMoistDirection === "south") {
         //Correct Selections
         this.openSnackBar(11);
-
-      } else {
+        this.showSuccessContent();
+      } else if (this.selectedMoistDirection == "north") {
         this.openSnackBar(10);
+      } else {
+        this.openSnackBar(3);
       }
     }
     else if (this.selectedTempNorth === "warm" && this.selectedTempSouth === 'cold')
     {
       if (this.selectedMoistDirection === "south") {
         this.openSnackBar(9);
-      } else {
+      } else if (this.selectedMoistDirection == "north") {
         this.openSnackBar(8);
+      } else {
+        this.openSnackBar(3);
       }
     }
     else if (this.selectedTempNorth === "warm" && this.selectedTempSouth === 'warm')
     {
       if (this.selectedMoistDirection === "south") {
         this.openSnackBar(7);
-      } else {
+      } else if (this.selectedMoistDirection == "north") {
         this.openSnackBar(6);
+      } else {
+        this.openSnackBar(3);
       }
     }
     else if (this.selectedTempNorth === "cold" && this.selectedTempSouth === 'cold')
     {
       if (this.selectedMoistDirection === "south") {
         this.openSnackBar(5);
-      } else {
+      } else if (this.selectedMoistDirection == "north") {
         this.openSnackBar(4);
+      } else {
+        this.openSnackBar(3);
       }
     }
      else
@@ -166,6 +175,11 @@ export class MapContainerComponent implements OnInit {
   }
 
   //Stage 3: Show animations and additional info
+  showSuccessContent ()
+  {
+    this.visibilityThree = '';
+    this.snowAnimation.togglePlayVideo();
+  }
 
 
   /** Remove labels for pressure systems if draggables have changed default state */
@@ -263,6 +277,8 @@ export class MapContainerComponent implements OnInit {
 
 
   constructor(private snackBar: MatSnackBar) { }
+
+  @ViewChild('snowAni', null) snowAnimation;
 
   ngOnInit() {}
 
