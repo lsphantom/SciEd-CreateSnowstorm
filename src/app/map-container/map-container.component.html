@@ -13,7 +13,8 @@
 <div class="overlays-container">
     <!-- PROCEED DYNAMIC BOX-->
     <div id="proceed-box" class="basebox paperboxed {{proceedVisibility}}">
-        <p>Press next to proceed.  <button id="next-button" mat-raised-button (click)="proceedToTemps()">Next &rarr;</button></p>
+        <p>Great! For an upslope snow storm, high pressure is in the north and low pressure is in the south.<br><br>
+        Press next to proceed.  <button id="next-button" mat-raised-button color="primary" (click)="proceedToTemps()">Next &rarr;</button></p>
     </div>
 
     <!-- LAUNCH PAD -->
@@ -43,6 +44,7 @@
             (cdkDropListDropped)="drop($event)"
             [cdkDropListEnterPredicate]="noReturnPredicate">
             <div id="drag-item-{{item}}" *ngFor="let item of inactiveList" cdkDrag cdkDragBoundary=".drag-boundary">
+                <p class="pspreview-text">{{item}} pressure system</p>
                 <img src="assets/{{item}}_pressure.png" alt="{{item}} pressure icon">
             </div>
           </div>
@@ -122,6 +124,7 @@
     <!-- Snowstorm Animation and End Infobox -->
     <app-video #snowAni class="{{visibilityThree}}"></app-video>
     <div id="end-infobox" class="basebox paperboxed {{visibilityThree}}">
+        Nice job! You chose the right ingredients and made an upslope snow storm.<br><br>
         In the northern hemisphere, upslope conditions develop when there's a low pressure system over southern portions of a mountain range and high
         pressure system to the north. The winds rotate counterclockwise around the low, pushing relatively warm moist air up against the east slope 
         of the mountains. Air cools as it climbs higher, allowing moisture to condense into clouds and fall as rain or snow.
@@ -129,5 +132,41 @@
         The cold high pressure system helps focus the winds from the east and keeps the cold air in place so snow can develop.
     </div>
     
+    <!-- Snowflake Animation -->
+    <div id="snowflake-ani" class="{{visibilityThree}}">
+        <div id="sf-set1" class="{{sfa1}}">
+            *<br>
+            *<br>
+            *  *<br>
+            *<br>
+            *<br>
+            *<br>
+        </div>
+        <div id="sf-set2" class="{{sfa2}}">
+            *<br>
+            *<br>
+            * *<br>
+            *<br>
+        </div>
+        <div id="sf-set3" class="{{sfa3}}">
+            ** *<br>
+            *<br>
+            *<br>
+            * *<br>
+        </div>
+        <div id="sf-set4" class="{{sfa4}}">
+            *<br>
+            * *<br>
+            *<br>
+            *<br>
+        </div>
+        <div id="sf-set5" class="{{sfa5}}">
+            * *<br>
+            *<br>
+            *<br>
+
+        </div>
+    </div>
+
 </div>         
 </div>

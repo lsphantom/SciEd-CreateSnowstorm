@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { delay } from 'q';
 
 
 @Component({
@@ -56,6 +57,11 @@ export class MapContainerComponent implements OnInit {
 
   //Stage 3 Dynamic Content Displays
   visibilityThree = 'hidden';
+  sfa1 = '';
+  sfa2 = '';
+  sfa3 = '';
+  sfa4 = '';
+  sfa5 = '';
   
 
   //Snackbar Messages
@@ -82,7 +88,7 @@ export class MapContainerComponent implements OnInit {
   //Functions
   openSnackBar(messageId)
   {
-    this.snackBar.open(this.messageArray[messageId], null, {duration: 10000});
+    this.snackBar.open(this.messageArray[messageId], "x", {duration: 10000});
   }
 
   drop(event: CdkDragDrop<string[]>)
@@ -94,9 +100,14 @@ export class MapContainerComponent implements OnInit {
       if (event.container.data.length === 0) {
         transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       }
-      else {
-        transferArrayItem(event.container.data, this.inactiveList, event.previousIndex, event.currentIndex);
-        transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      else if (event.container.data.length === 1) {
+        if (event.container.id === 'cdk-drop-list-1') {
+          transferArrayItem(event.previousContainer.data, event.container.data, 1, 0);
+          transferArrayItem(event.container.data, this.southDrop, 1, 0);
+        } else {
+          transferArrayItem(event.previousContainer.data, event.container.data, 1, 0);
+          transferArrayItem(event.container.data, this.northDrop, 1, 0);
+        }        
       }
     }
     this.removePSLabels();
@@ -115,7 +126,7 @@ export class MapContainerComponent implements OnInit {
     else if (this.northDrop[0] === "high"  && this.southDrop[0] === "low")
     {
       //Correct Selections
-      this.openSnackBar(2);
+      //this.openSnackBar(2);
       this.proceedVisibility = '';
     }
      else
@@ -130,7 +141,6 @@ export class MapContainerComponent implements OnInit {
     if (this.selectedTempNorth === "cold" && this.selectedTempSouth === 'warm') {
       if (this.selectedMoistDirection === "south") {
         //Correct Selections
-        this.openSnackBar(11);
         this.showSuccessContent();
       } else if (this.selectedMoistDirection == "north") {
         this.openSnackBar(10);
@@ -177,8 +187,19 @@ export class MapContainerComponent implements OnInit {
   //Stage 3: Show animations and additional info
   showSuccessContent ()
   {
+    //this.openSnackBar(11);
     this.visibilityThree = '';
     this.snowAnimation.togglePlayVideo();
+
+    //delay this operation to see it animate
+    setTimeout(() => {
+      this.sfa1 = 'ani';
+      this.sfa2 = 'ani';
+      this.sfa3 = 'ani';
+      this.sfa4 = 'ani';
+      this.sfa5 = 'ani';
+    }, 500);
+    
   }
 
 
